@@ -1,16 +1,3 @@
-$(document).ready(function() {
-    var sds = document.getElementById("dum");
-    if(sds == null){
-        alert("You are using a free package.\n You are not allowed to remove the tag.\n");
-        $("#selection").hide();
-    }
-    var sdss = document.getElementById("dumdiv");
-    if(sdss == null){
-        alert("You are using a free package.\n You are not allowed to remove the tag.\n");
-        $("#selection").hide();
-    }
-})
-
 var handles = ["SELECT STATE","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Dadra and Nagar Haveli","Daman and Diu","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka",
                                         "Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Orissa","Puducherry","Punjab", "Rajasthan","Sikkim","Tamil Nadu",
                                         "Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"];
