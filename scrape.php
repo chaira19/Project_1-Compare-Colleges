@@ -94,6 +94,8 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         //$conn->close();
+        $k = 0;
+        $x = 0;
 
         for ($i = 0; $i < sizeof($matches1[2]); $i++) {
 
@@ -108,8 +110,42 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $matches1[3][$i] = 'Not Known';
 
             }
-            
-            $sql = "INSERT INTO ".strtolower($_POST["city"])." (id, college, location, reviews, facilities) VALUES (NULL, "."'".addslashes($matches1[2][$i])."'".", "."'".addslashes($matches1[3][$i])."'".", ".$matches2[1][$i].", 'all')";
+
+            $facs = "";
+
+            for ($j = $k; $j < sizeof($matches3[1]); $j++)
+            {
+                if($matches3[1][$j]!=$matches4[1][$x])
+                {
+                    $facs .= $matches3[1][$j];
+                    $facs .= ", ";
+                    $k = $k + 1;
+                }
+                else
+                {
+                    $facs .= $matches3[1][$j];
+                    $facs .= ", ";
+                    $k = $k + 1;
+                    break;
+                }
+            }
+
+            $x = $x + 1;
+
+            $collegename = addslashes($matches1[2][$i]);
+
+            $check = "SELECT college FROM ".strtolower($_POST["city"])." WHERE college=". $collegename;
+
+            if ($conn->query($check))
+
+            {
+                // TODO
+                // if row exists then leave else INSERT
+            }
+
+            else {
+                $sql = "INSERT INTO ".strtolower($_POST["city"])." (id, college, location, reviews, facilities) VALUES (NULL, "."'".addslashes($matches1[2][$i])."'".", "."'".addslashes($matches1[3][$i])."'".", ".$matches2[1][$i].", "."'". $facs."'" . ")";
+            }
 
             if ($conn->query($sql) === TRUE) {
                 //echo "New record created successfully \n";
