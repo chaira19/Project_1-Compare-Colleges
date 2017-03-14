@@ -124,7 +124,6 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
                 else
                 {
                     $facs .= $matches3[1][$j];
-                    $facs .= ", ";
                     $k = $k + 1;
                     break;
                 }
@@ -134,27 +133,43 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $collegename = addslashes($matches1[2][$i]);
 
-            $check = "SELECT college FROM ".strtolower($_POST["city"])." WHERE college=". $collegename;
+            $check = "SELECT id FROM ".strtolower($_POST["city"])." WHERE college = '". $collegename."'";
 
-            if ($conn->query($check))
+            //$query = query($conn, $check);
+            //if ($conn->query($check) == TRUE)
+                // to do something here for below TODO
 
-            {
+            //{
+              //  echo "already exists";
                 // TODO
                 // if row exists then leave else INSERT
-            }
+            //}
 
-            else {
-                $sql = "INSERT INTO ".strtolower($_POST["city"])." (id, college, location, reviews, facilities) VALUES (NULL, "."'".addslashes($matches1[2][$i])."'".", "."'".addslashes($matches1[3][$i])."'".", ".$matches2[1][$i].", "."'". $facs."'" . ")";
-            }
+            //else {
 
+            $result = $conn->query("SELECT * FROM ".strtolower($_POST["city"])." WHERE college = "."'".$collegename."'");
+
+            if (!$result) {
+              die($conn->error);
+            }
+            //echo "num_rows = ".$result->num_rows."\n";
+            if ($result->num_rows > 0) {
+               //echo "Duplicate email\n";
+               // do something to alert user about non-unique email
+            } else {
+             
+
+            $sql = "INSERT IGNORE INTO ".strtolower($_POST["city"])." (id, college, location, reviews, facilities) VALUES (NULL, "."'".addslashes($matches1[2][$i])."'".", "."'".addslashes($matches1[3][$i])."'".", ".$matches2[1][$i].", "."'". $facs."'" . ")";
+            // WHERE NOT EXISTS ( SELECT college FROM ".strtolower($_POST["city"]). " WHERE college = "."'".$collegename."') LIMIT 1"}
+                }
             if ($conn->query($sql) === TRUE) {
                 //echo "New record created successfully \n";
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+              //  echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
 
-        $sql = "SELECT id, college, location, reviews, facilities FROM ".strtolower($_POST["city"]);
+        $sql = "SELECT DISTINCT id, college, location, reviews, facilities FROM ".strtolower($_POST["city"]);
         $result = $conn->query($sql);
 
         $conn->close();
