@@ -1,3 +1,35 @@
+<head>
+    <title><?php echo $_POST["$city"] ?></title>
+    <style type="text/css">
+        .loader 
+        {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          background: url('page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+          opacity: .8;
+        }
+    </style>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(window).load(function() 
+        {
+          $(".loader").fadeOut("slow");
+        })
+    </script>
+</head>
+
 <?php 
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -11,36 +43,19 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $url = file_get_contents('http://www.shiksha.com/b-tech/colleges/b-tech-colleges-'.urlencode(strtolower($_POST["city"])));
 
-        ////print_r($url);
+        //print_r($url);
         
         //for name of college and location
         preg_match_all('/<h2 class="tuple-clg-heading"><a(.+)>(.+)<\/a>
 <p>\| (.+)<\/p>/i', $url, $matches1);
 
-        //print_r($matches1[0]);
-
-
-
         // for number of reviews
         preg_match_all('/<div class="tuple-revw-sec">
 <span><b>(\d+)<\/b>/i', $url, $matches2);
         
-        /*print_r($matches2);
-
-        print_r($matches2[0]);
-
-        print_r($matches2[1]);
-
-        echo "break";
-
-        print_r($matches2[1][0]);*/
-
-        //echo "break";
         // for all facilities
         preg_match_all('/<h3>(.+)<\/h3>
 <p><\/p>/i', $url, $matches3);
-
-        //print_r($matches3);
 
         // for last facility of a college in the list
         preg_match_all('/<h3>(.+)<\/h3>
@@ -50,14 +65,11 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
 <\/li>
 <\/ul>/i', $url, $matches4);
 
-        //print_r($matches4);
-
-        //echo sizeof($matches);
         //echo preg_last_error();
 
         $servername = "localhost";
-        $username = "chirayu";
-        $password = "IlovemyindiA19!";
+        $username = "your_username_here"; //mysql username
+        $password = "your_password_here"; //mysql password
 
         // http://stackoverflow.com/questions/6445917/connect-failed-access-denied-for-user-rootlocalhost-using-password-yes
 
@@ -94,6 +106,8 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         //$conn->close();
+
+        //Algorithm for facilities starts here
         $k = 0;
         $x = 0;
 
@@ -135,18 +149,6 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $check = "SELECT id FROM ".strtolower($_POST["city"])." WHERE college = '". $collegename."'";
 
-            //$query = query($conn, $check);
-            //if ($conn->query($check) == TRUE)
-                // to do something here for below TODO
-
-            //{
-              //  echo "already exists";
-                // TODO
-                // if row exists then leave else INSERT
-            //}
-
-            //else {
-
             $result = $conn->query("SELECT * FROM ".strtolower($_POST["city"])." WHERE college = "."'".$collegename."'");
 
             if (!$result) {
@@ -174,27 +176,38 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $conn->close();
     }
+
 ?>
 
-<table border="1">
-    <tr>
-        <td>Id</td>
-        <td>College</td>
-        <td>Location</td>
-        <td>Reviews</td>
-        <td>Facilities</td>
-    </tr>
 
-    <?php if ($result->num_rows > 0) { while($row = $result->fetch_assoc()) { ?>
+<body>
 
-    <tr>
-        <td><?php echo $row["id"] ?></td>
-        <td><?php echo $row["college"] ?></td>
-        <td><?php echo $row["location"] ?></td>
-        <td><?php echo $row["reviews"] ?></td>
-        <td><?php echo $row["facilities"] ?></td>
-    </tr>
+    <h1> Colleges in <?= $_POST["city"] ?> </h1>
+    <div class="loader"></div>
 
-    <?php } }  ?>
-</table>
+    <div>
+
+    <table class = "table table-striped">
+        <tr>
+            <td><b>Id</b></td>
+            <td><b>College</b></td>
+            <td><b>Location</b></td>
+            <td><b>Reviews</b></td>
+            <td><b>Facilities</b></td>
+        </tr>
+
+        <?php if ($result->num_rows > 0) { while($row = $result->fetch_assoc()) { ?>
+
+        <tr>
+            <td><?php echo $row["id"] ?></td>
+            <td><?php echo $row["college"] ?></td>
+            <td><?php echo $row["location"] ?></td>
+            <td><?php echo $row["reviews"] ?></td>
+            <td><?php echo $row["facilities"] ?></td>
+        </tr>
+
+        <?php } }  ?>
+    </table>
+    </div>
+</body>
 

@@ -2,19 +2,89 @@
 	
   <head>
     	<title>College Data</title>
-    	<script language="Javascript" src="jquery.js"></script>
+    	<!-- Latest compiled and minified CSS -->
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		  <!-- jQuery library -->
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+		  <!-- Latest compiled JavaScript -->
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style type="text/css">
+        body 
+        {
+          
+          background-image: url("1.jpg");
+          height: 100%;
+          width: 100%;
+          background-repeat: no-repeat;
+          
+
+        }
+
+        .bg 
+        {
+          vertical-align: bottom;
+          text-align: center;  
+        }
+
+        .button {
+         
+          cursor:pointer;
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
+          background-color: transparent; 
+          border: 1;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          border-radius: 50%; 
+        }
+
+        .navigation {
+
+          text-align: center;
+          color: white;
+        }
+      </style>
+      <script language="Javascript" src="jquery.js"></script>
    		<script type="text/JavaScript" src='state.js'></script>
+      <script type="text/Javascript">
+        function show_image() {
+          var img = document.getElementById("progress_bar");
+          img.src = "page-loader.gif";
+        }
+      </script>
   </head>
 
   <body>
-    Enter the name of the state of India and city to get the details of the colleges or universities existing there
+    <div class="bg">
+    <div class="navigation"><h1><i><u> Compare Colleges </u></i></h1>
+
     
+
+    
+
+    <h2>Enter the name of State in India and the city to get the details of the colleges or universities existing there</h2>
+
+    </div>
+    
+    <br>
     <form method="post" action="scrape.php">
-      	<select id="listBox" name="state" onchange='selct_district(this.value)'></select>
-      	<select id='secondlist' name="city"></select>
-      	<button type="submit">Submit</button>
+      	<select id="listBox" class="button" name="state" onchange='selct_district(this.value)'></select>
+      	<select id='secondlist' class="button" name="city"></select>
+      	<button type="submit" onclick="show_image()" class="button">Submit</button>
     </form>
+
+    <img id="progress_bar">
+
     
+    </div>
+
   </body>
 
 </html>
