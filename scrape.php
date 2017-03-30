@@ -12,6 +12,10 @@
           background: url('page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
           opacity: .8;
         }
+
+        body {
+            background-color:#193753;
+        }
     </style>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -68,8 +72,8 @@ else if($_SERVER["REQUEST_METHOD"] == "POST") {
         //echo preg_last_error();
 
         $servername = "localhost";
-        $username = "your_username_here"; //mysql username
-        $password = "your_password_here"; //mysql password
+        $username = "put_your_mysql_username_here"; //mysql username
+        $password = "put_your_mysql_password_here"; //mysql password
 
         // http://stackoverflow.com/questions/6445917/connect-failed-access-denied-for-user-rootlocalhost-using-password-yes
 

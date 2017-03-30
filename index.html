@@ -14,12 +14,17 @@
         body 
         {
           
-          background-image: url("1.jpg");
+          background-image: url("/images/1.jpg");
           height: 100%;
           width: 100%;
           background-repeat: no-repeat;
           
 
+        }
+
+        select option,
+        select {
+            background-color:#193753;
         }
 
         .bg 
@@ -31,24 +36,26 @@
         .button {
          
           cursor:pointer;
-          -webkit-border-radius: 5px;
-          border-radius: 5px;
+          -webkit-border-radius: 10px;
+          border-radius: 15px;
           background-color: transparent; 
-          border: 1;
+          border: 3;
           color: white;
           padding: 15px 32px;
           text-align: center;
           text-decoration: none;
-          display: inline-block;
+          opacity: 100%;
+          
           font-size: 16px;
           margin: 4px 2px;
-          border-radius: 50%; 
+
         }
 
         .navigation {
 
           text-align: center;
           color: white;
+          margin-top: 9%;
         }
       </style>
       <script language="Javascript" src="jquery.js"></script>
@@ -56,7 +63,7 @@
       <script type="text/Javascript">
         function show_image() {
           var img = document.getElementById("progress_bar");
-          img.src = "page-loader.gif";
+          img.src = "/images/page-loader.gif";
         }
       </script>
   </head>
