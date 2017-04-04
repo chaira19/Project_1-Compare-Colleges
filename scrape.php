@@ -87,6 +87,14 @@
 
 			// http://stackoverflow.com/questions/6445917/connect-failed-access-denied-for-user-rootlocalhost-using-password-yes
 
+                        // Create database
+			$sql = "CREATE DATABASE colleges";
+			if ($conn->query($sql) === TRUE) {
+			   // echo "Database created successfully";
+			} else {
+			   // echo "Error creating database: " . $conn->error;
+			}
+
 			// Create connection
 			$conn = new mysqli($servername, $username, $password, "colleges");
 
@@ -96,13 +104,7 @@
 			} 
 			//echo "Connected successfully";
 
-			// Create database
-			$sql = "CREATE DATABASE colleges";
-			if ($conn->query($sql) === TRUE) {
-			   // echo "Database created successfully";
-			} else {
-			   // echo "Error creating database: " . $conn->error;
-			}
+			
 
 			// sql to create table by the name of the city
 			$sql = "CREATE TABLE ".strtolower($_POST["city"])."(
